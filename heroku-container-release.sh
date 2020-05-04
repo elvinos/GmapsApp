@@ -1,5 +1,5 @@
 #!/bin/bash
-imageId=$(docker inspect registry.heroku.com/gmapsapph/web --format={{.Id}})
+imageId=$(docker inspect registry.heroku.com/gmapsapp/web --format={{.Id}})
 payload='{"updates":[{"type":"web","docker_image":"'"$imageId"'"}]}'
 curl -n -X PATCH https://api.heroku.com/apps/gmapsapp/formation \
 -d "$payload" \
