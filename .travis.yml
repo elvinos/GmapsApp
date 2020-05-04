@@ -1,16 +1,36 @@
-sudo: required
-services:
-  - docker
+#sudo: required
+#services:
+#  - docker
+#language: python
+#python:
+#  - "3.8"
+## command to install dependencies
+#install:
+#  - pip install -r backend/requirements.txt
+## command to run tests
+##script:
+##  - python -m pytest -v
+#after_success:
+#  - sh .travis/deploy_dockerhub.sh
+#  - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
+
+# config for (Django + Postgres) -> Docker -> Travis -> Heroku
+
 language: python
 python:
-  - "3.8"
-# command to install dependencies
-install:
-  - pip install -r backend/requirements.txt
-# command to run tests
-script:
-  - python -m pytest -v
+    - 3.6
+services:
+    - docker
 
-after_success:
-  - sh .travis/deploy_dockerhub.sh
-  - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
+install:
+    - pip install -r backend/requirements.txt
+
+script:
+    - docker-compose run web python backend/manage.py test
+
+deploy:
+    provider: script
+    script: bash docker_push.sh
+    skip_cleanup: true
+    on:
+        branch: master
