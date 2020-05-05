@@ -11,6 +11,8 @@ services:
       - postgres
     volumes:
       - ./backend:/app
+    environment:
+      - DJANGO_SETTINGS_MODULE=config.settings.development
     command: /start.sh
     entrypoint: /entrypoint.sh
     restart: on-failure

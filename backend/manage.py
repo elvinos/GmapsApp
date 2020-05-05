@@ -1,9 +1,17 @@
 #!/usr/bin/env python
 import os
 import sys
+import socket
 
 if __name__ == '__main__':
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
+
+    ipaddress = socket.gethostbyname( socket.gethostname() )
+    if ipaddress == '127.0.0.1':
+            settings = 'config.settings.development'
+    else:
+        settings = 'config.settings.production'
+
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', settings)
 
     try:
         from django.core.management import execute_from_command_line

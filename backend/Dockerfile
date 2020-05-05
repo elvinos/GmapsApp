@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM python:3.7
 
 # python envs
 ENV PYTHONFAULTHANDLER=1 \
@@ -11,6 +11,9 @@ ENV PYTHONFAULTHANDLER=1 \
 # python dependencies
 COPY ./requirements.txt /
 RUN pip install -r ./requirements.txt
+
+# Make port 8000 available for the app
+EXPOSE 8000
 
 # upload scripts
 COPY ./scripts/entrypoint.sh ./scripts/start.sh ./scripts/gunicorn.sh /
